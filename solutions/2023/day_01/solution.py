@@ -4,6 +4,7 @@
 
 from ...base import StrSplitSolution, answer
 
+
 def calibration_value(line: str) -> int:
     digits = [char for char in line if char.isdigit()]
     return int(digits[0] + digits[-1])
