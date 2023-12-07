@@ -2,9 +2,14 @@
 
 # puzzle prompt: https://adventofcode.com/2023/day/6
 
-from ...base import StrSplitSolution, answer
-from operator import mul
 from functools import reduce
+from operator import mul
+
+from ...base import StrSplitSolution, answer, slow
+
+
+def push(t):
+    return (p*(t-p) for p in range(t))
 
 class Solution(StrSplitSolution):
     _year = 2023
@@ -14,14 +19,11 @@ class Solution(StrSplitSolution):
     def part_1(self) -> int:
         time, distance = [[int(n) for n in l.split() if n.isnumeric()] for l in
                 self.input]
-        push = lambda t: [p*(t-p) for p in range(t)]
-        return reduce(mul, [len([d for d in push(time[r]) if d > distance[r]])
-            for r in range(len(time))])
+        return reduce(mul, (len([d for d in push(time[r]) if d > distance[r]])
+            for r in range(len(time))))
 
-    # @answer(1234)
+    @slow
+    @answer(30125202)
     def part_2(self) -> int:
-        pass
-
-    # @answer((1234, 4567))
-    # def solve(self) -> tuple[int, int]:
-    #     pass
+        time, distance = [int("".join([c for c in l if c.isdigit()])) for l in self.input]
+        return len([d for d in push(time) if d > distance])

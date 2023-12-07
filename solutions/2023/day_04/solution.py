@@ -6,6 +6,7 @@ from collections import Counter
 
 from ...base import StrSplitSolution, answer
 
+
 def get_winners(input):
     cards = [[n for n in card if n.isnumeric()]
                 for card in [line.split(" ") for line in input]]

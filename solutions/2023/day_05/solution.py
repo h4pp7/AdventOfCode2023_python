@@ -4,6 +4,7 @@
 
 from ...base import TextSolution, answer
 
+
 def map_seed(seed, maps):
     for map in maps:
         for r, d in map:
