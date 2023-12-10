@@ -6,28 +6,20 @@ from collections import Counter
 
 from ...base import StrSplitSolution, answer
 
-
-def diff(row, ex):
+def extrapolate(row, ex):
     diffs = [row[i + 1] - row[i] for i in range(len(row) - 1)]
-    ex += diffs[-1]
     if len(Counter(diffs)) == 1:
-        return ex
+        return ex + diffs[-1]
     else:
-        return diff(diffs, ex)
+        return extrapolate(diffs, ex + diffs[-1])
 
 class Solution(StrSplitSolution):
     _year = 2023
     _day = 9
 
-    @answer(1980437560)
-    def part_1(self) -> int:
+    @answer((1980437560, 977))
+    def solve(self) -> tuple[int, int]:
         rows = [[int(n) for n in r.split()] for r in self.input]
-        return sum([diff(r, r[-1]) for r in rows])
-
-    # @answer(1234)
-    def part_2(self) -> int:
-        pass
-
-    # @answer((1234, 4567))
-    # def solve(self) -> tuple[int, int]:
-    #     pass
+        p1 = sum([extrapolate(r, r[-1]) for r in rows])
+        p2 = sum([extrapolate(list(reversed(r)), r[0]) for r in rows])
+        return p1, p2
